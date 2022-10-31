@@ -6,15 +6,15 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/10/31 14:08:50 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:58:06 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int get_str_len(char *s)
+size_t get_str_len(char *s)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -22,30 +22,76 @@ int get_str_len(char *s)
 	return (i);
 }
 
-int	loop_and_get_n(char *txt)
+char *loop_and_get_n(char *last)
 {
-	int i;
+	size_t i;
+	size_t j;
+	char *line;
 
+	line = malloc(sizeof(char) *);
 	i = 0;
-	while (i < BUFFER_SIZE)
+	j = 0;
+	while (last[i])
 	{
-		
+		line[i] = last[i];
+		if (last[i] == '\n')
+			break;
+		i++;
 	}
+	last[++i] = '\0';
+	return ();
 }
 
-char *get_next_line(int fd)
+size_t check_last(char *last)
 {
-	static char *temp;
-	char *txt;
-	int current;
+	size_t i;
 
-	txt = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	read(fd, txt, BUFFER_SIZE);
-	txt[len] = '\0'; 
-	len = get_str_len(txt);
-	while ()
+	i = 0;
+	while (last[i])
 	{
-		
+		if (last[i] == '\n')
+			return (0);
+		i++;
 	}
+	return (1);
+}
+
+char *join_strings(char *s1, char *s2)
+{
+	size_t i;
+	size_t j;
+	char *str;
+
+	str = malloc(sizeof(char) * (get_str_len(s1) + get_str_len(s2)));
+	if (!str)
+	{
+		free(str);
+		return (0);
+	}
+	i = -1;
+	j = 0;
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[j])
+		s1[i++] = *s2[j++];
+	*s1 = '\0';
+	return (str);
+}
+
+char *get_next_line(size_t fd)
+{
+	static char *last;
+	char txt[BUFFER_SIZE + 1];
+	while (1)
+	{
+		if (check_last(last))
+		{
+			read(fd, txt, BUFFER_SIZE);
+			last = join_strings(last, txt);
+		}
+		else
+			return (loop_and_get_n(last));
+	}
+
 	return (0);
 }
