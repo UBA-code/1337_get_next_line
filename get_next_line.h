@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:18:11 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/10/31 18:07:36 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:10:27 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
 #include <stdlib.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 10
 #endif
 
 char *get_next_line(size_t fd);
 char *get_last_str(char *txt, size_t *current, size_t *last);
+
+
+char *get_n_index(char *txt, size_t *len);
 
 #endif
