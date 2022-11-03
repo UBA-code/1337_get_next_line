@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/03 13:56:04 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:24:14 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ char *loop_and_get_n(char *last)
 		i++;
 	}
 	line[++i] = '\0';
-	last = next_str;
-	// printf("after get n index %s\n", last);
+	last = get_n_index(last, &len);
 	return (line);
 }
 
@@ -104,6 +103,10 @@ char *get_next_line(size_t fd)
 	static char *last;
 	// printf("start function\n%s\n", last);
 	char txt[BUFFER_SIZE + 1];
+	char *line;
+	size_t j;
+
+	j = 0;
 	while (1)
 	{
 		if (check_last(last))
@@ -116,10 +119,10 @@ char *get_next_line(size_t fd)
 		}
 		else
 		{
-			printf("%s\n", loop_and_get_n(last));
-			printf("%s\n", last);
-			return (0);
-			// return (loop_and_get_n(last));
+			// last = get_n_index(last, &j);
+			line = loop_and_get_n(last);
+			last = get_n_index(last, &j);
+			return (line);
 		}
 	}
 	return (0);
