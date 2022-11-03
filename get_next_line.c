@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/03 16:24:14 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:22:52 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,7 @@ char *join_strings(char *s1, char *s2)
 		}
 	}
 	while (s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
+		str[i++] = s2[j++];
 	str[i] = '\0';
 	return (str);
 }
@@ -101,7 +97,6 @@ char *join_strings(char *s1, char *s2)
 char *get_next_line(size_t fd)
 {
 	static char *last;
-	// printf("start function\n%s\n", last);
 	char txt[BUFFER_SIZE + 1];
 	char *line;
 	size_t j;
@@ -113,13 +108,10 @@ char *get_next_line(size_t fd)
 		{
 			if (!read(fd, txt, BUFFER_SIZE))
 				return (0);
-			// printf("before join \t %s\n", last);
 			last = join_strings(last, txt);
-			// printf("after join \t %s\n", last);
 		}
 		else
 		{
-			// last = get_n_index(last, &j);
 			line = loop_and_get_n(last);
 			last = get_n_index(last, &j);
 			return (line);
