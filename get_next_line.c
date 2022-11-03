@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/01 14:12:49 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:56:04 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t get_str_len(char *s)
 	size_t i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -30,10 +32,9 @@ char *loop_and_get_n(char *last)
 	char *next_str;
 	size_t len;
 
+	len = 0;
 	next_str = get_n_index(last, &len);
-	line = malloc(sizeof(char) * len);
-	if (!line)
-		return (0);
+	line = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	j = 0;
 	while (last[i])
@@ -43,8 +44,9 @@ char *loop_and_get_n(char *last)
 			break;
 		i++;
 	}
-	last[++i] = '\0';
-	last = get_n_index(last, &len);
+	line[++i] = '\0';
+	last = next_str;
+	// printf("after get n index %s\n", last);
 	return (line);
 }
 
@@ -54,7 +56,7 @@ size_t check_last(char *last)
 
 	i = 0;
 	if (!last)
-		return (0);
+		return (1);
 	while (last[i])
 	{
 		if (last[i] == '\n')
@@ -63,6 +65,7 @@ size_t check_last(char *last)
 	}
 	return (1);
 }
+
 
 char *join_strings(char *s1, char *s2)
 {
@@ -76,12 +79,22 @@ char *join_strings(char *s1, char *s2)
 		free(str);
 		return (0);
 	}
-	i = -1;
+	i = 0;
 	j = 0;
-	while (s1[++i])
-		str[i] = s1[i];
+	if (s1)
+	{
+		while (s1[i])
+		{
+			str[i] = s1[i];
+			i++;
+		}
+	}
 	while (s2[j])
-		str[i++] = s2[j++];
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
 	str[i] = '\0';
 	return (str);
 }
@@ -89,23 +102,25 @@ char *join_strings(char *s1, char *s2)
 char *get_next_line(size_t fd)
 {
 	static char *last;
+	// printf("start function\n%s\n", last);
 	char txt[BUFFER_SIZE + 1];
-	size_t read_size;
-
-	read_size = read(fd, txt, BUFFER_SIZE);
-	/*
 	while (1)
 	{
 		if (check_last(last))
 		{
-			read_size = read(fd, txt, BUFFER_SIZE);
-			if (!read_size)
+			if (!read(fd, txt, BUFFER_SIZE))
 				return (0);
+			// printf("before join \t %s\n", last);
 			last = join_strings(last, txt);
+			// printf("after join \t %s\n", last);
 		}
 		else
-			return (loop_and_get_n(last));
+		{
+			printf("%s\n", loop_and_get_n(last));
+			printf("%s\n", last);
+			return (0);
+			// return (loop_and_get_n(last));
+		}
 	}
-	*/
 	return (0);
 }

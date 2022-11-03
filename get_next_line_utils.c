@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/01 00:40:38 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:55:07 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char *get_last_str(char *txt, size_t *current, size_t *last)
 }
 */
 
-char *get_n_index(char *txt, size_t *len)
+
+
+char *get_n_index(char 	*txt, size_t *len)
 {
 	size_t i;
 
@@ -27,9 +29,12 @@ char *get_n_index(char *txt, size_t *len)
 	while (txt[i])
 	{
 		if (txt[i] == '\n')
-			return (txt + i);
+		{
+			txt = &txt[++i];
+			break;
+		}
+		++*len;
 		i++;
 	}
-	*len = i + 2;
 	return (txt);
 }
