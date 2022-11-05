@@ -6,92 +6,26 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/03 17:22:52 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/05 21:25:23 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t get_str_len(char *s)
-{
-	size_t i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char *loop_and_get_n(char *last)
-{
-	size_t i;
-	size_t j;
-	char *line;
-	char *next_str;
-	size_t len;
-
-	len = 0;
-	next_str = get_n_index(last, &len);
-	line = malloc(sizeof(char) * (len + 1));
-	i = 0;
-	j = 0;
-	while (last[i])
-	{
-		line[i] = last[i];
-		if (last[i] == '\n')
-			break;
-		i++;
-	}
-	line[++i] = '\0';
-	last = get_n_index(last, &len);
-	return (line);
-}
-
-size_t check_last(char *last)
+int	check_new_exicted(char *last)
 {
 	size_t i;
 
 	i = 0;
 	if (!last)
-		return (1);
+		return (0);
 	while (last[i])
 	{
 		if (last[i] == '\n')
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
-}
-
-
-char *join_strings(char *s1, char *s2)
-{
-	size_t i;
-	size_t j;
-	char *str;
-
-	str = malloc(sizeof(char) * (get_str_len(s1) + get_str_len(s2)));
-	if (!str)
-	{
-		free(str);
-		return (0);
-	}
-	i = 0;
-	j = 0;
-	if (s1)
-	{
-		while (s1[i])
-		{
-			str[i] = s1[i];
-			i++;
-		}
-	}
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	return (str);
+	return (0);
 }
 
 char *get_next_line(size_t fd)
@@ -99,23 +33,26 @@ char *get_next_line(size_t fd)
 	static char *last;
 	char txt[BUFFER_SIZE + 1];
 	char *line;
-	size_t j;
+	int read_nb;
 
-	j = 0;
-	while (1)
+	read_nb = 1;
+	while (read_nb && !check_new_exicted(last))
 	{
-		if (check_last(last))
-		{
-			if (!read(fd, txt, BUFFER_SIZE))
-				return (0);
-			last = join_strings(last, txt);
-		}
-		else
-		{
-			line = loop_and_get_n(last);
-			last = get_n_index(last, &j);
-			return (line);
-		}
+		read_nb = read(fd, txt, BUFFER_SIZE);
+		if (read_nb == -1)
+			return (0);
+		txt[read_nb] = '\0';
+		last = join_strings(last, txt);
 	}
-	return (0);
+	if (read_nb == 0)
+	{
+		if (!last[0])
+			return(0);
+		line = last;
+		last = 0;
+		return (line);
+	}
+	line = get_before_new(last);
+	last = get_after_new(last);
+	return (line);
 }
