@@ -6,13 +6,13 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/05 21:25:23 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/06 21:52:04 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	check_new_exicted(char *last)
+int check_new_exicted(char *last)
 {
 	size_t i;
 
@@ -31,10 +31,16 @@ int	check_new_exicted(char *last)
 char *get_next_line(size_t fd)
 {
 	static char *last;
-	char txt[BUFFER_SIZE + 1];
+	char *txt;
 	char *line;
 	int read_nb;
 
+	txt = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!txt)
+	{
+		free(txt);
+		return (0);
+	}
 	read_nb = 1;
 	while (read_nb && !check_new_exicted(last))
 	{
@@ -42,12 +48,13 @@ char *get_next_line(size_t fd)
 		if (read_nb == -1)
 			return (0);
 		txt[read_nb] = '\0';
-		last = join_strings(last, txt);
+		// last = join_strings(last, txt);
+		last = ft_strjoin(last, txt);
 	}
 	if (read_nb == 0)
 	{
 		if (!last[0])
-			return(0);
+			return (0);
 		line = last;
 		last = 0;
 		return (line);
