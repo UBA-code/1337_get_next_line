@@ -6,15 +6,14 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 18:53:55 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:56:12 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_after_new(char *last, char *txt)
+char *get_after_new(char *last)
 {
-	free(txt);
 	size_t i;
 	char *str;
 
