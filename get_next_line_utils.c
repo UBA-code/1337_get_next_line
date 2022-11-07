@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 18:48:53 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:50:42 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char *get_after_new(char *last, char *txt)
 {
-	free(txt);
 	size_t i;
 	char *str;
 

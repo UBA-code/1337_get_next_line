@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:18:11 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 15:49:01 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:50:06 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ size_t get_str_len(char *str);
 // char *join_strings(char *s1, char *s2);
 char	*ft_strjoin(char *s1, char *s2);
 char *check_read_return(char **last, char *line, char *txt);
-char *free_func(char *s1, char *s2);
+char *free_func(char *s1);
 
 #endif
