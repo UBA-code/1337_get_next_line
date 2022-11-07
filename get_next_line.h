@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:18:11 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 12:06:16 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:49:01 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define BUFFER_SIZE 42
 #endif
 
-char *get_next_line(size_t fd);
+char *get_next_line(int fd);
 char *get_after_new(char *last, char *txt);
 char	*get_before_new(char *last);
 char *get_substring(char *str, size_t len);
