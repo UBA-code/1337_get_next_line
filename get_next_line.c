@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 18:50:36 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:54:21 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,46 +43,45 @@ int check_new_exicted(char *last)
 char *get_next_line(int fd)
 {
 	static char *last;
-	char txt[BUFFER_SIZE + 1];
+	char *txt;
 	char *line;
 	int read_nb;
 
-	// txt = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	// if (!txt)
-		// return (0);
+	txt = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!txt)
+		return (0);
 	line = NULL;
 	read_nb = 1;
 	while (read_nb && !check_new_exicted(last))
 	{
 		read_nb = read(fd, txt, BUFFER_SIZE);
 		if (read_nb == -1)
-			return (free_func(last));
+			return (free_func(last, txt));
 		txt[read_nb] = '\0';
-		// last = join_strings(last, txt);
 		if (read_nb == 0 && last)
-			return (check_read_return(&last, line));
+			return (check_read_return(&last, line, txt));
 		last = ft_strjoin(last, txt);
 	}
 	if (read_nb == 0)
-		return (check_read_return(&last, line));
+		return (check_read_return(&last, line, txt));
 	line = get_before_new(last);
 	last = get_after_new(last, txt);
 	return (line);
 }
 
-char *free_func(char *s1)
+char *free_func(char *s1, char *s2)
 {
 	free(s1);
-	// free(s2);
+	free(s2);
 	return (0);
 }
 
-char *check_read_return(char **last, char *line)
+char *check_read_return(char **last, char *line, char *txt)
 {
 	if (!*(*last))
 		return (0);
 	line = *last;
 	*last = 0;
-	free_func(*last);
+	free_func(*last, txt);
 	return (line);
 }
