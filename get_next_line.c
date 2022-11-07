@@ -6,11 +6,23 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 15:49:07 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:48:23 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t get_str_len(char *str)
+{
+	size_t i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
 
 int check_new_exicted(char *last)
 {
@@ -28,7 +40,7 @@ int check_new_exicted(char *last)
 	return (0);
 }
 
-char *get_next_line(int fd);
+char *get_next_line(int fd)
 {
 	static char *last;
 	char *txt;
