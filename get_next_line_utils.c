@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 18:56:12 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/07 22:43:20 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 		s1 = get_substring("", 0);
 	if (s1)
-	{
 		ft_strcpy(final_str, s1);
-		free(s1);
-	}
 	i = get_str_len(final_str);
 	if (s2)
 		ft_strcpy(final_str + i, s2);
+	free(s1);
 	return (final_str);
 }
