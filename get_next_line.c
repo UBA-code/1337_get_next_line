@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/07 18:57:41 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:17:25 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int check_new_exicted(char *last)
 	size_t i;
 
 	i = 0;
-	if (!last)
+	if (!last || !last[0])
 		return (0);
 	while (last[i])
 	{
@@ -57,6 +57,8 @@ char *get_next_line(int fd)
 		txt[read_nb] = '\0';
 		if (read_nb == 0 && last)
 			return (check_read_return(&last, line));
+		if (read_nb == 0)
+			return (0);
 		last = ft_strjoin(last, txt);
 	}
 	if (read_nb == 0)
