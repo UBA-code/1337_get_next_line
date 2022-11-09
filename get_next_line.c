@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/09 17:33:56 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:43:08 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ char *get_next_line(int fd)
 	{
 		read_nb = read(fd, txt, BUFFER_SIZE);
 		if (read_nb == -1)
-			return (free_func(last));
+		{
+			free(last);
+			return (0);
+		}
 		txt[read_nb] = '\0';
 		if (read_nb == 0 && last)
 			return (check_read_return(&last, line));
-		if (read_nb == 0)
+		if (read_nb == 0 && !last)
 			return (0);
 		last = ft_strjoin(last, txt);
 	}
@@ -68,21 +71,32 @@ char *get_next_line(int fd)
 	return (line);
 }
 
+/*
 char *free_func(char *s1)
 {
 	free(s1);
 	return (0);
 }
+*/
+
+char *return_empty(void)
+{
+	char *new;
+
+	new = malloc(sizeof(char) * 1);
+	if (!new)
+		return (0);
+	new[0] = '\0';
+	return (new);
+}
 
 char *check_read_return(char **last, char *line)
 {
 	if (!*(*last))
-	{
-		free(*last);
 		return (0);
 	}
 	line = *last;
 	*last = 0;
-	free_func(*last);
+	free(*last);
 	return (line);
 }

@@ -6,11 +6,29 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/08 15:02:32 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:03:57 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*get_before_new(char *last)
+{
+	size_t i;
+
+	i = 0;
+	while (last[i])
+	{
+		if (last[i] == '\n')
+		{
+			if (get_str_len(&last[i + 1]) <= 1)
+				return (return_empty());
+			return (get_substring(last, i + 1));
+		}
+		i++;
+	}
+	return (last);
+}
 
 char *get_after_new(char *last)
 {
@@ -22,7 +40,9 @@ char *get_after_new(char *last)
 	{
 		if (last[i] == '\n')
 		{
-			str = get_substring(last + (i + 1), get_str_len(last + (i + 1)));
+			if (get_str_len(&last[i + 1]) <= 1)
+				return (return_empty);
+			str = get_substring(&last[i + 1], get_str_len(&last[i + 1]));
 			free(last);
 			return (str);
 		}
@@ -30,21 +50,6 @@ char *get_after_new(char *last)
 	}
 	return (last);
 }
-
-char	*get_before_new(char *last)
-{
-	size_t i;
-
-	i = 0;
-	while (last[i])
-	{
-		if (last[i] == '\n')
-			return (get_substring(last, i + 1));
-		i++;
-	}
-	return (last);
-}
-
 
 char *get_substring(char *str, size_t len)
 {
@@ -55,7 +60,7 @@ char *get_substring(char *str, size_t len)
 	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
 		return (0);
-	while (str[i] && i < len)
+	while ( str[i] && i < len)
 	{
 		new_str[i] = str[i];
 		i++;
@@ -64,7 +69,7 @@ char *get_substring(char *str, size_t len)
 	return (new_str);
 }
 
-char	*ft_strcpy(char *dest, char *src)
+char	*str_copy(char *dest, char *src)
 {
 	int	i;
 
@@ -92,10 +97,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 		s1 = get_substring("", 0);
 	if (s1)
-		ft_strcpy(final_str, s1);
+		str_copy(final_str, s1);
 	i = get_str_len(final_str);
 	if (s2)
-		ft_strcpy(final_str + i, s2);
+		str_copy(final_str + i, s2);
 	free(s1);
 	return (final_str);
 }
