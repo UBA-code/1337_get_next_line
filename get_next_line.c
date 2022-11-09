@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/09 17:33:56 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:22:25 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int check_new_exicted(char *last)
 	size_t i;
 
 	i = 0;
-	if (!last || !last[0])
+	if (!last)
 		return (0);
 	while (last[i])
 	{
@@ -47,6 +47,8 @@ char *get_next_line(int fd)
 	char *line;
 	int read_nb;
 
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (0);
 	line = NULL;
 	read_nb = 1;
 	while (read_nb && !check_new_exicted(last))
@@ -61,8 +63,6 @@ char *get_next_line(int fd)
 			return (0);
 		last = ft_strjoin(last, txt);
 	}
-	if (read_nb == 0)
-		return (check_read_return(&last, line));
 	line = get_before_new(last);
 	last = get_after_new(last);
 	return (line);
@@ -79,10 +79,11 @@ char *check_read_return(char **last, char *line)
 	if (!*(*last))
 	{
 		free(*last);
+		*last = NULL;
 		return (0);
 	}
-	line = *last;
-	*last = 0;
-	free_func(*last);
+	line = get_substring(*last, get_str_len(*last));
+	free(*last);
+	*last = NULL;
 	return (line);
 }
