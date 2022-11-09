@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/08 15:17:25 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:33:56 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ char *free_func(char *s1)
 char *check_read_return(char **last, char *line)
 {
 	if (!*(*last))
+	{
+		free(*last);
 		return (0);
+	}
 	line = *last;
 	*last = 0;
 	free_func(*last);
