@@ -6,16 +6,16 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 20:09:59 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/08 15:02:32 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 22:59:25 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_after_new(char *last)
+char	*get_after_new(char *last)
 {
-	size_t i;
-	char *str;
+	size_t	i;
+	char	*str;
 
 	i = 0;
 	while (last[i])
@@ -33,7 +33,7 @@ char *get_after_new(char *last)
 
 char	*get_before_new(char *last)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (last[i])
@@ -45,11 +45,10 @@ char	*get_before_new(char *last)
 	return (last);
 }
 
-
-char *get_substring(char *str, size_t len)
+char	*get_substring(char *str, size_t len)
 {
-	char *new_str;
-	size_t i;
+	char	*new_str;
+	size_t	i;
 
 	i = 0;
 	new_str = malloc(sizeof(char) * (len + 1));

@@ -6,15 +6,15 @@
 /*   By: ybel-hac <ybel-hac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:17:26 by ybel-hac          #+#    #+#             */
-/*   Updated: 2022/11/09 21:22:25 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2022/11/09 23:00:58 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t get_str_len(char *str)
+size_t	get_str_len(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
@@ -24,9 +24,9 @@ size_t get_str_len(char *str)
 	return (i);
 }
 
-int check_new_exicted(char *last)
+int	check_new_exicted(char *last)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!last)
@@ -40,12 +40,12 @@ int check_new_exicted(char *last)
 	return (0);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *last;
-	char txt[BUFFER_SIZE + 1];
-	char *line;
-	int read_nb;
+	static char		*last;
+	char			txt[BUFFER_SIZE + 1];
+	char			*line;
+	int				read_nb;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
@@ -68,13 +68,13 @@ char *get_next_line(int fd)
 	return (line);
 }
 
-char *free_func(char *s1)
+char	*free_func(char *s1)
 {
 	free(s1);
 	return (0);
 }
 
-char *check_read_return(char **last, char *line)
+char	*check_read_return(char **last, char *line)
 {
 	if (!*(*last))
 	{

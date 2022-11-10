@@ -1,69 +1,32 @@
+
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "get_next_line.h"
+#include <fcntl.h>
 
-int main()
+char *get_next_line(int fd);
+int alloc_number(void);
+
+int main(int argc, char **argv)
 {
-	size_t fd = open("./test.txt", O_RDONLY);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
-	// get_next_line(fd);
+    char *line;
+    int fd = 0;
 
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	close(fd);
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	close(fd);
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	close(fd);
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	fd = open("./test.txt", O_RDONLY);
-	printf("|%s|", get_next_line(fd));
-	printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-	// printf("|%s|", get_next_line(fd));
-
-
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	close(fd);
-	return (0);
+    if (argc > 1)
+    {
+        fd = open(argv[1], O_RDONLY);
+        if (fd < 0)
+            return (0);
+    }
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        write(1, line, strlen(line));
+        free(line);
+    }
+    if (fd > 0)
+        close(fd);
+    return (0);
 }
